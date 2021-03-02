@@ -1,0 +1,16 @@
+@model CartItem
+
+<div class="cart text-center">
+    @if (Enumerable.Count(ViewBag.cart) > 0)
+    {  
+        <h3 class="mb-4">Items In Your Cart</h3>
+        @foreach (var prod in @ViewBag.cart)
+        {   
+            <span class="mt-2">Product: @prod.product.Name | Quantity: @prod.Quantity</span> <br>     
+        }
+    } else {
+                <h3 class="mb-4">Cart is Empty</h3>
+
+    }
+
+</div>

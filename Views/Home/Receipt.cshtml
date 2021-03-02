@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Receipt";
+}
+@model Product
+
+<div class="text-center">
+
+    <h1>Thank you for shopping at DealerOnShop</h1>
+
+    @{double total = 0;}
+    @{double tax = 0;}
+    @{double subTotal = 0;}
+
+    @if (Enumerable.Count(ViewBag.cart) == 0)
+    {
+
+        <h3>No items in cart</h3>
+        <a class="btn btn-primary " href="/">Home</a>
+    } else {
+        
+        <div class="mt-4 ">
+
+        <h3>Here is your receipt</h3>
+        @foreach (var prod in @ViewBag.cart)
+        {
+            total += prod.Quantity*prod.product.Price;
+            @if (prod.Quantity > 1)
+            {
+            <span>@prod.product.Name: (@prod.Quantity @@ $@prod.product.Price) </span>  
+            } else {
+                <span>@prod.product.Name: $@prod.product.Price </span>  
+            }
+            <br>
+        }
+        </div>
+
+        {tax = total*0.1;}
+        @* Round to nearest 5 cents *@
+        {tax = Math.Round(tax*20)/20;}
+        {subTotal = Math.Round(total, 2);}
+        {total+=tax;}
+        {total = Math.Round(total, 2);}
+        
+        <div class="card" >
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">SubTotal: $@subTotal</li>
+                <li class="list-group-item">Tax: $@tax</li>
+                <li class="list-group-item">Total: $@total</li>
+            </ul>
+        </div>
+        <a class="btn btn-primary mt-4" href="/">Home</a>
+            
+    }
+</div>
+        
+
